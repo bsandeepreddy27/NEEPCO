@@ -12,3 +12,9 @@ pip install mysqlclient
 python manage.py runserver
 
 python manage.py makemigrations myapp
+
+
+git remote add origin https://github.com/bsandeepreddy27/NEEPCO.git
+git add .
+git commit -m "Initial commit"
+git push -u origin main
