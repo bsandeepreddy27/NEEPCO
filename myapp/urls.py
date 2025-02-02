@@ -3,6 +3,8 @@ from . import views
 from .views import vendor_info
 from django.contrib.auth import views as auth_views
 
+from .views import otp_form, resend_otp
+
 urlpatterns = [
     path('about/', views.about, name='about'),
     path('compliance/', views.compliance, name='compliance'),
@@ -13,7 +15,8 @@ urlpatterns = [
     path('edit_profile/', views.EditProfileView.as_view(), name='edit_profile'),
     path('', views.index, name='index'),  # Home page
     
-    path('login/', views.LoginView.as_view(), name='login'),
+   # path('login/', views.LoginView.as_view(), name='login'),
+   
     path('logout/', views.logout_view, name='logout'),
     path('payment_receipt/', views.payment_receipt, name='payment_receipt'),
     path('payments/', views.payments, name='payments'),
@@ -23,8 +26,22 @@ urlpatterns = [
     path('profile/', views.user_profile, name='profile'),
     path('reports/', views.reports, name='reports'),
     path('generate-report/', views.generate_report, name='generate_report'),  # Handle custom report generation
-    path('signup/', views.SignUpView.as_view(), name='signup'),
+   
+    #path('signup/', views.signup, name='signup'),
+    path('signup/', views.signup_view, name='signup_view'),
+    
+
+    path('signup/', views.signup_view, name='signup'),
+   
+    path("resend_signup_otp/", resend_otp, name="resend_signup_otp"),
+    
     path('track_payments/', views.track_payments, name='track_payments'),
+
+    path('login/', views.login_view, name='login'),
+    path('otp_verification/', views.otp_verification, name='otp_verification'),
+
+    path('otp/', views.otp_form, name='otp_form'),
+    path('resend_otp/', views.resend_otp, name='resend_otp'),
 
     path('vendor_info/', views.vendor_info, name='vendor_info'),
     path('vendor_info/<int:vendor_id>/', views.vendor_info, name='vendor_info'),

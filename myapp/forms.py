@@ -8,6 +8,25 @@ from django.db.models import Q
 from .models import ProcurementRequest, Vendor, Profile
 
 
+from django import forms
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={
+        'placeholder': 'Username or Email',
+        'class': 'form-control',
+    }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': 'Password',
+        'class': 'form-control',
+    }))
+
+class OTPForm(forms.Form):
+    otp = forms.CharField(max_length=6, required=True, widget=forms.TextInput(attrs={
+        'placeholder': 'Enter OTP',
+        'class': 'form-control',
+    }))
+
 class CustomUserCreationForm(UserCreationForm):
     """
     Custom user creation form, including first name, last name, and email.

@@ -19,8 +19,18 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.contrib.auth.forms import SetPasswordForm
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
+from .forms import SignUpForm 
 
 
+from django.conf import settings
+import random
+import string
+
+
+from .forms import LoginForm, OTPForm 
 
 # Function-based views for each page
 def about(request):
@@ -93,18 +103,167 @@ def index(request):
 
 
 
-class LoginView(View):
-    def get(self, request):
-        form = AuthenticationForm()
-        return render(request, 'login.html', {'form': form})
-
-    def post(self, request):
-        form = AuthenticationForm(data=request.POST)
+# Login View with OTP
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
         if form.is_valid():
-            user = form.get_user()
-            login(request, user)
+            username_input = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username_input, password=password)
+            if user is not None:
+                # Store the username and user email in session for later use (e.g., in OTP sending)
+                request.session['username'] = user.username
+                request.session['user_email'] = user.email
+
+                # Generate a one-time password (OTP)
+                otp = generate_otp()  # This function should return a string representing the OTP.
+                request.session['otp'] = otp
+
+                # Send the OTP to the user's email, including a personalized greeting.
+                # send_otp_to_email(user.email, otp, user.username)
+                send_login_otp(user.email, otp, user.username)
+                # Redirect to the OTP verification page.
+                return redirect('otp_verification')
+            else:
+                messages.error(request, "Invalid username or password.")
+                return redirect('login')
+    else:
+        form = LoginForm()
+
+    return render(request, 'login.html', {'form': form})
+
+
+# OTP Verification View
+def otp_verification(request):
+    if request.method == 'POST':
+        otp = request.POST.get('otp')
+        if otp == request.session.get('otp'):
+            messages.success(request, "OTP verified successfully. You are now logged in.")
+            # Do your login process here
             return redirect('dashboard')  # Redirect to dashboard after successful login
-        return render(request, 'login.html', {'form': form})
+        else:
+            messages.error(request, "Invalid OTP. Please try again.")
+    return render(request, 'otp_form.html')
+
+
+# Generate OTP function
+def generate_otp():
+    # Generate a 6-digit OTP
+    otp = ''.join(random.choices(string.digits, k=6))
+    return otp
+
+# Send OTP to email
+def send_otp_to_email(user_email, otp, username):
+    # Customize the email subject and message body as needed
+    subject = "Your OTP Code for NEEPCO Login"
+    
+    message = (
+        f"Hello {username},\n\n"
+        f"Your OTP code for NEEPCO login is: {otp}\n\n"
+        "Thank you for using the NEEPCO Portal.\n\n"
+        "Regards,\n"
+        "NEEPCO Team"
+    )
+    
+    from_email = settings.DEFAULT_FROM_EMAIL
+    
+    send_mail(
+        subject,
+        message,
+        from_email,
+        [user_email],
+        fail_silently=False,
+    )
+
+def send_login_otp(user_email, otp, username):
+    """Send OTP email for login authentication."""
+    subject = "Your OTP Code for NEEPCO Login"
+    message = (
+        f"Hello {username},\n\n"
+        f"Your OTP code for logging into the NEEPCO Portal is:\n\n"
+        f" OTP: {otp}\n\n"
+        "Enter this OTP on NEEPCO Portal to log in to your account.\n\n"
+        "Regards,\n"
+        "NEEPCO Team"
+    )
+
+    send_mail(
+        subject,
+        message,
+        settings.DEFAULT_FROM_EMAIL,
+        [user_email],
+        fail_silently=False,
+    )
+
+def send_signup_otp(user_email, otp, username):
+    """Send OTP email for user signup verification."""
+    subject = "Verify Your Email - NEEPCO Signup"
+    message = (
+        f"Hello {username},\n\n"
+        f"Welcome to the NEEPCO Portal!\n"
+        f"To complete your registration, please verify your email using this OTP code:\n\n"
+        f" OTP: {otp}\n\n"
+        "Enter this OTP on the website to activate your account.\n\n"
+        "Regards,\n"
+        "NEEPCO Team"
+    )
+
+    send_mail(
+        subject,
+        message,
+        settings.DEFAULT_FROM_EMAIL,
+        [user_email],
+        fail_silently=False,
+    )
+
+def otp_verify(request):
+    if request.method == "POST":
+        otp = request.POST.get('otp')
+        # Validate OTP
+        if otp_is_valid(otp):  # Implement this function to check OTP
+            messages.success(request, "Logged in successfully!")
+            return redirect('dashboard')
+        else:
+            messages.error(request, "Invalid OTP. Please try again.")
+            return render(request, 'otp_form.html')
+    return redirect('login')
+
+def otp_form(request):
+    if request.method == "POST":
+        otp = request.POST.get('otp')
+        if verify_otp(otp):  # Implement OTP verification logic
+            messages.success(request, "OTP verified successfully! You are logged in.")
+            return redirect('dashboard')  # Redirect to dashboard after successful OTP verification
+        else:
+            messages.error(request, "Invalid OTP. Please try again.")
+            return render(request, 'otp_form.html')  # Show OTP form again with error message
+    return render(request, 'otp_form.html')
+
+
+
+
+
+def resend_otp(request):
+    # Retrieve the user's email and username from the session
+    user_email = request.session.get('user_email')
+    username = request.session.get('username')
+    
+    if not user_email or not username:
+        messages.error(request, "No email or username found in session. Please login again.")
+        return redirect('login')
+    
+    # Generate a new OTP
+    otp = generate_otp()
+    
+    # Send the OTP via email with a custom message that greets the user by name.
+    send_otp_to_email(user_email, otp, username)
+    
+    # Update the OTP stored in session
+    request.session['otp'] = otp
+    
+    messages.success(request, "A new OTP has been sent to your email.")
+    return redirect('otp_verification')
 
 def logout_view(request):
     logout(request)  # Correct way to log out
@@ -172,18 +331,38 @@ def user_profile(request):
 def reports(request):
     return render(request, 'reports.html')
 
-class SignUpView(View):
-    def get(self, request):
-        form = CustomUserCreationForm()
-        return render(request, 'signup.html', {'form': form})
-
-    def post(self, request):
-        form = CustomUserCreationForm(request.POST)
+def signup_view(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Your account has been created successfully!')
-            return redirect('login')
-        return render(request, 'signup.html', {'form': form})
+            # Create the user account
+            user = form.save()  # or however you create the user
+            # Optionally, log the user in immediately
+            # login(request, user)
+
+            # Generate an OTP for email verification
+            otp = generate_otp()
+            # Store the OTP and user info in the session for later verification
+            request.session['otp'] = otp
+            request.session['user_email'] = user.email
+            request.session['username'] = user.username
+
+            # Send OTP via email with a custom greeting
+            send_signup_otp(user.email, otp, user.username)
+        
+
+            # Optionally, add a message indicating that an OTP was sent
+            messages.success(request, "An OTP has been sent to your email. Please verify your account.")
+
+            # Redirect to OTP verification page
+            return redirect('otp_verification')
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = SignUpForm()
+
+    return render(request, 'signup.html', {'form': form})
+
 
 def track_payments(request):
     payment_status = request.GET.get('payment_status', 'all')
