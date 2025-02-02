@@ -2,15 +2,38 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+# models.py
+from django.db import models
+
 
 class Vendor(models.Model):
+    # You usually don't need to declare vendor_id if you want Django to create the default auto-incrementing primary key.
+    # If you do need a custom primary key, you can define it as follows:
+    vendor_id = models.AutoField(primary_key=True)
+    
     name = models.CharField(max_length=255)
-    business_type = models.CharField(max_length=255)
-    contact_person = models.CharField(max_length=255)
-    phone_number = models.CharField(max_length=15)
-    email = models.EmailField()
-    address = models.TextField()
-    status = models.CharField(max_length=50)
+    
+    # Add a default value for vendor_type so that new rows have a value.
+    VENDOR_TYPE_CHOICES = (
+        ('mse', 'MSE (Micro and Small Enterprises)'),
+        ('large', 'Large Enterprise'),
+    )
+    vendor_type = models.CharField(
+        max_length=50,
+        choices=VENDOR_TYPE_CHOICES,
+        default='mse'  # Set a default value, for example 'mse'
+    )
+    
+    # If you have additional fields that were added later and are non-nullable, make sure to provide a default as well.
+    # For example, if you have these extra fields:
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    contact_person = models.CharField(max_length=255, blank=True, null=True)
+    business_type = models.CharField(max_length=100, blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    
+    # A simple status field
+    status = models.CharField(max_length=50, default='Active')
 
     def __str__(self):
         return self.name

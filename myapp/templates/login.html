@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,9 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - NEEPCO</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* Add your existing styles here */
+    </style>
 </head>
 
 <body>
+
     <!-- Header Section -->
     <header>
         <div class="logo">
@@ -34,28 +37,73 @@
         <!-- Login Form -->
         <form id="login-form" method="POST" action="{% url 'login' %}">
             {% csrf_token %}
+
             <div class="form-group">
                 <label for="id_username">Username or Email:</label>
-                {{ form.username.errors }}  <!-- Display field-specific errors -->
+                {{ form.username.errors }}
                 {{ form.username }}
             </div>
-        
+
             <div class="form-group">
                 <label for="id_password">Password:</label>
-                {{ form.password.errors }}  <!-- Display field-specific errors -->
-                {{ form.password }}
+                <div class="password-container">
+                    {{ form.password }}
+                    <span class="toggle-password" onclick="togglePassword('id_password')">👁️</span>
+                </div>
+                {{ form.password.errors }}
             </div>
-        
+
             <div class="form-group">
-                {{ form.non_field_errors }}  <!-- Display non-field errors -->
-                <button type="submit" class="button">Login</button>
+                {{ form.non_field_errors }}
+                <button type="submit">Login</button>
             </div>
         </form>
-        
 
-        <!-- Signup Link -->
+        <!-- OTP Form (Only visible after first step of login) -->
+        <form id="otp-form" method="POST" action="{% url 'otp_verify' %}" style="display:none;">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_otp">Enter OTP:</label>
+                <input type="text" name="otp" id="id_otp" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Verify OTP</button>
+            </div>
+        </form>
+
+        <!-- Forgot Password and Signup Links -->
+        <p><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
         <p>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a>.</p>
     </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>© 2024 NEEPCO | <a href="#">Terms & Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact Us</a> | <a href="#">FAQ</a></p>
+    </footer>
+
+    <!-- JavaScript for Password Toggle -->
+    <script>
+        function togglePassword(fieldId) {
+            let field = document.getElementById(fieldId);
+            if (field.type === "password") {
+                field.type = "text";
+            } else {
+                field.type = "password";
+            }
+        }
+
+        // JavaScript to show OTP form after initial login
+        const loginForm = document.getElementById('login-form');
+        const otpForm = document.getElementById('otp-form');
+
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent normal form submission
+            // Send request to server to send OTP, upon success show OTP form
+            otpForm.style.display = 'block';
+            loginForm.style.display = 'none';  // Hide login form after submitting
+        });
+    </script>
+
 </body>
 
 </html>

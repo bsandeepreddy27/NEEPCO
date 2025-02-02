@@ -8,6 +8,19 @@ from .models import Vendor, PurchaseOrder, ProcurementRequest, Payment
 from .forms import ProcurementRequestForm, VendorForm, CustomUserCreationForm, ProfileForm
 from django.views.generic import View
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import UserChangeForm
+
+
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
+from django.contrib.auth.forms import PasswordChangeForm
+
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from django.contrib.auth.forms import SetPasswordForm
+
+
 
 # Function-based views for each page
 def about(request):
@@ -189,16 +202,94 @@ def track_payments(request):
     }
     return render(request, 'track_payments.html', context)
 
-def vendor_info(request, vendor_id):
-    vendor = get_object_or_404(Vendor, id=vendor_id)
+def vendor_info(request):
+    vendor = get_object_or_404(Vendor)
     return render(request, 'vendor_info.html', {'vendor': vendor})
 
-def vendor_details(request, vendor_id):
-    vendor = get_object_or_404(Vendor, id=vendor_id)
-    return render(request, 'vendor-details.html', {'vendor': vendor})
+
 
 def vendor(request):
     return render(request, 'vendor.html')
+
+
+def vendor_management(request):
+    # Optionally, you can handle search/filter parameters from the GET request:
+    vendor_name = request.GET.get('vendorName', '')
+    vendor_type = request.GET.get('vendorType', 'all')
+    
+    # Start with all vendors
+    vendors = Vendor.objects.all()
+    
+    # Filter by vendor name if provided
+    if vendor_name:
+        vendors = vendors.filter(name__icontains=vendor_name)
+    
+    # Filter by vendor type if it's not "all"
+    if vendor_type and vendor_type != 'all':
+        vendors = vendors.filter(vendor_type=vendor_type)
+    
+    context = {
+        'vendors': vendors,
+    }
+    return render(request, 'vendor.html', context)
+
+def vendor_details(request, vendor_id):
+    # A simple example view to show vendor details.
+    vendor = get_object_or_404(Vendor, vendor_id=vendor_id)
+    context = {
+        'vendor': vendor,
+    }
+    return render(request, 'vendor_details.html', context)
+
+
+
+# Password Reset Request View
+def password_reset_request(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        try:
+            user = get_user_model().objects.get(email=email)
+            token = default_token_generator.make_token(user)
+            uid = urlsafe_base64_encode(str(user.pk).encode())
+            reset_url = request.build_absolute_uri(f'/password-reset/{uid}/{token}/')
+            send_mail(
+                'Password Reset Request',
+                f'Please use the following link to reset your password: {reset_url}',
+                'your-email@example.com',
+                [email],
+                fail_silently=False,
+            )
+            return redirect('password_reset_done')
+        except get_user_model().DoesNotExist:
+            pass  # If user does not exist, just silently ignore
+    return render(request, 'password_reset.html')
+
+# Password Reset Done View (confirmation page after email sent)
+def password_reset_done(request):
+    return render(request, 'password_reset_done.html')
+
+# Password Reset Confirm View (when user clicks the link in the email)
+def password_reset_confirm(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = get_user_model().objects.get(pk=uid)
+        if default_token_generator.check_token(user, token):
+            if request.method == 'POST':
+                form = SetPasswordForm(user, request.POST)
+                if form.is_valid():
+                    form.save()
+                    return redirect('password_reset_complete')
+            else:
+                form = SetPasswordForm(user)
+            return render(request, 'password_reset_confirm.html', {'form': form})
+        else:
+            return redirect('password_reset')
+    except Exception as e:
+        return redirect('password_reset')
+
+# Password Reset Complete View
+def password_reset_complete(request):
+    return render(request, 'password_reset_complete.html')
 
 def generate_report(request):
     return render(request, 'report.html') 
@@ -241,3 +332,4 @@ def submit_purchase_order(request):
 
         return redirect('dashboard')  # Redirect to dashboard or appropriate page
     return redirect('create_purchase')  # Redirect to the creation page if the request is GET
+

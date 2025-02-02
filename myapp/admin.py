@@ -1,6 +1,13 @@
 from django.contrib import admin
 from .models import Vendor, PurchaseOrder
 
+
+
+
+
+admin.site.register(Vendor)
+
+
 class VendorAdmin(admin.ModelAdmin):
     list_display = ('name', 'business_type', 'contact_email', 'contact_phone')
     

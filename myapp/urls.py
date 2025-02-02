@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from .views import vendor_info
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('about/', views.about, name='about'),
@@ -16,8 +18,8 @@ urlpatterns = [
     path('payment_receipt/', views.payment_receipt, name='payment_receipt'),
     path('payments/', views.payments, name='payments'),
     path('payments/initiate/', views.initiate_payment, name='initiate_payment'),
-    path('procurement/', views.procurement_management, name='procurement_management'),
     path('procurement/', views.procurement, name='procurement'),
+    path('procurement/', views.procurement_management, name='procurement_management'),
     path('profile/', views.user_profile, name='profile'),
     path('reports/', views.reports, name='reports'),
     path('generate-report/', views.generate_report, name='generate_report'),  # Handle custom report generation
@@ -28,4 +30,12 @@ urlpatterns = [
     path('vendor_info/<int:vendor_id>/', views.vendor_info, name='vendor_info'),
     path('vendor_details/<int:vendor_id>/', views.vendor_details, name='vendor_details'),
     path('vendor/', views.vendor, name='vendor'),
+
+    path('password-reset/', views.password_reset_request, name='password_reset'),  # URL pattern for password reset
+    path('password-reset/done/', views.password_reset_done, name='password_reset_done'),
+    path('password-reset/<uidb64>/<token>/', views.password_reset_confirm, name='password_reset_confirm'),
+    path('password-reset/complete/', views.password_reset_complete, name='password_reset_complete'),
+
+
 ]
+

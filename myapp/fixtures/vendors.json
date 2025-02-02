@@ -1,0 +1,32 @@
+[
+    {
+        "model": "myapp.vendor",
+        "pk": 1,
+        "fields": {
+            "name": "Alpha Supplies",
+            "vendor_type": "mse",
+            "contact": "alpha@example.com",
+            "status": "Active"
+        }
+    },
+    {
+        "model": "myapp.vendor",
+        "pk": 2,
+        "fields": {
+            "name": "Beta Industrial",
+            "vendor_type": "large",
+            "contact": "beta@example.com",
+            "status": "Active"
+        }
+    },
+    {
+        "model": "myapp.vendor",
+        "pk": 3,
+        "fields": {
+            "name": "Gamma Traders",
+            "vendor_type": "mse",
+            "contact": "gamma@example.com",
+            "status": "Inactive"
+        }
+    }
+]

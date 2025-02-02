@@ -108,10 +108,18 @@ class ProfileForm(forms.ModelForm):
         fields = ['role', 'department', 'employee_id']
 
 
+
+
 class VendorForm(forms.ModelForm):
-    """
-    Form to add or update vendor details.
-    """
     class Meta:
         model = Vendor
-        fields = ['name', 'business_type', 'contact_person', 'phone_number', 'email', 'address', 'status']
+        fields = [
+            'name',
+            'vendor_type',
+            'phone_number',
+            'contact_person',
+            'business_type',
+            'address',
+            'email',
+            'status'
+        ]
