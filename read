@@ -1,0 +1,14 @@
+python -m venv myenv  
+
+myenv\Scripts\activate  
+pip install django  
+django-admin --version   
+django-admin startproject myproject   
+
+cd myproject           
+python manage.py startapp myapp
+pip install mysqlclient
+
+python manage.py runserver
+
+python manage.py makemigrations myapp

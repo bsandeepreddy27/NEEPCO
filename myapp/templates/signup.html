@@ -1,0 +1,98 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - NEEPCO</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <a href="{% url 'index' %}">NEEPCO</a>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <main>
+        <h1>Create Your Account</h1>
+
+        <!-- Display Form Errors -->
+        {% if form.non_field_errors %}
+            <div class="error">
+                <p>{{ form.non_field_errors }}</p>
+            </div>
+        {% endif %}
+
+        <!-- Signup Form -->
+        <form method="POST" action="{% url 'signup' %}" id="signup-form">
+            {% csrf_token %}
+
+            <!-- Full Name Field -->
+            <div class="form-group">
+                <label for="id_first_name">First Name:</label>
+                {{ form.first_name }}  <!-- This will render the input field -->
+                {% for error in form.first_name.errors %}
+                    <div class="error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_last_name">Last Name:</label>
+                {{ form.last_name }}  <!-- This will render the input field -->
+                {% for error in form.last_name.errors %}
+                    <div class="error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <!-- Username Field -->
+            <div class="form-group">
+                <label for="id_username">Username:</label>
+                {{ form.username }}  <!-- This will render the input field -->
+                {% for error in form.username.errors %}
+                    <div class="error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group">
+                <label for="id_email">Email:</label>
+                {{ form.email }}  <!-- This will render the input field -->
+                {% for error in form.email.errors %}
+                    <div class="error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group">
+                <label for="id_password1">Password:</label>
+                {{ form.password1 }}  <!-- This will render the password input field -->
+                {% for error in form.password1.errors %}
+                    <div class="error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div class="form-group">
+                <label for="id_password2">Confirm Password:</label>
+                {{ form.password2 }}  <!-- This will render the confirm password field -->
+                {% for error in form.password2.errors %}
+                    <div class="error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="button">Sign Up</button>
+        </form>
+
+        <!-- Redirect to Login -->
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
+    </main>
+</body>
+
+</html>

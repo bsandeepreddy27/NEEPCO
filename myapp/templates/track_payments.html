@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Payments - NEEPCO</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'procurement_management' %}">Procurement Management</a>
+            <a href="{% url 'vendor' %}">Vendor Management</a>
+            <a href="{% url 'payments' %}">Payments</a>
+            <a href="{% url 'reports' %}">Reports</a>
+            <a href="{% url 'compliance' %}">Compliance</a>
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Track Payments</h2>
+
+        <section class="payment-filter">
+            <form action="{% url 'track_payments' %}" method="GET">
+                {% csrf_token %}
+                <label for="payment_status">Payment Status</label>
+                <select id="payment_status" name="payment_status">
+                    <option value="all" {% if payment_status == "all" %}selected{% endif %}>All</option>
+                    <option value="pending" {% if payment_status == "pending" %}selected{% endif %}>Pending</option>
+                    <option value="completed" {% if payment_status == "completed" %}selected{% endif %}>Completed</option>
+                    <option value="failed" {% if payment_status == "failed" %}selected{% endif %}>Failed</option>
+                </select>
+
+                <label for="payment_date">Payment Date</label>
+                <input type="date" id="payment_date" name="payment_date" value="{{ payment_date|default_if_none:'' }}">
+
+                <button type="submit">Filter</button>
+            </form>
+        </section>
+
+        <section class="payment-list">
+            <h3>Recent Payments</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Payment ID</th>
+                        <th>Vendor</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Payment Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in payments %}
+                    <tr>
+                        <td>{{ payment.id }}</td>
+                        <td>{{ payment.vendor.name }}</td>
+                        <td>${{ payment.amount }}</td>
+                        <td>{{ payment.get_status_display }}</td>
+                        <td>{{ payment.payment_date }}</td>
+                        <td><a href="{% url 'payment_details' payment.id %}">View Details</a></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6">No payments found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 NEEPCO | <a href="#">Terms & Conditions</a> | <a href="#">Privacy Policy</a></p>
+    </footer>
+</body>
+</html>

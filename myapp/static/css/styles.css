@@ -1,0 +1,1010 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+header {
+    background: #005792;
+    padding: 1em;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+nav a {
+    color: white;
+    margin-left: 1em;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 2em;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    background: #333;
+    color: white;
+    padding: 1em;
+    text-align: center;
+    margin-top: 2em;
+}
+
+h1, h2, h3 {
+    color: #005792;
+}
+
+/* Buttons */
+button {
+    padding: 0.8em;
+    font-size: 1em;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    max-width: 400px;
+}
+
+input, select, button {
+    padding: 0.8em;
+    font-size: 1em;
+}
+
+button[type="submit"] {
+    background-color: #005792;
+    color: white;
+}
+
+button[type="submit"]:hover {
+    background-color: #00406b;
+}
+
+/* Links */
+a {
+    color: #005792;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Vendor Page Specific Styles */
+.vendor-search form {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    margin-bottom: 2em;
+}
+
+.vendor-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+
+.vendor-list th, .vendor-list td {
+    padding: 1em;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.vendor-list th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.vendor-list tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.vendor-list a {
+    color: #005792;
+    text-decoration: none;
+}
+
+.vendor-list a:hover {
+    text-decoration: underline;
+}
+
+.mse-support ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.mse-support ul li a {
+    color: #005792;
+    text-decoration: none;
+}
+
+.mse-support ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Payments Page Specific Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+
+th, td {
+    padding: 1em;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    max-width: 400px;
+}
+
+form input, form button {
+    padding: 0.8em;
+    font-size: 1em;
+}
+
+button[type="submit"] {
+    background-color: #005792;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #00406b;
+}
+
+/* Reports Page Specific Styles */
+.report-section {
+    margin-bottom: 2em;
+    padding: 1em;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.report-section h2 {
+    color: #005792;
+    margin-bottom: 0.5em;
+}
+
+.report-chart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1em;
+}
+
+.report-chart img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Compliance Page Specific Styles */
+.compliance-section {
+    margin-bottom: 2em;
+    padding: 1em;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.compliance-section h2 {
+    color: #005792;
+    margin-bottom: 0.5em;
+}
+
+.compliance-overview ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.compliance-overview ul li {
+    margin: 0.5em 0;
+}
+
+.status {
+    font-weight: bold;
+    color: #28a745;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 0.8em;
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.document-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.document-list ul li {
+    margin: 0.5em 0;
+}
+
+.document-list ul li a {
+    color: #005792;
+    text-decoration: none;
+}
+
+.document-list ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .quick-links a {
+        width: 100%;
+        padding: 1em;
+    }
+
+    .notifications p {
+        font-size: 1em;
+    }
+
+    .report-chart img {
+        max-width: 90%;
+    }
+}
+/* Payments Page Specific Styles */
+
+/* General Table Styles for Payments */
+.payment-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+
+.payment-table th, .payment-table td {
+    padding: 1em;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.payment-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.payment-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Payment Form Styles */
+.payment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    max-width: 500px;
+    margin-top: 2em;
+}
+
+.payment-form input, .payment-form select, .payment-form button {
+    padding: 0.8em;
+    font-size: 1em;
+}
+
+.payment-form input, .payment-form select {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.payment-form button {
+    background-color: #005792;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.payment-form button:hover {
+    background-color: #00406b;
+}
+
+/* Payment Status Styles */
+.payment-status {
+    margin-top: 2em;
+    font-weight: bold;
+    padding: 1em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.payment-status.pending {
+    background-color: #ffcc00;
+    color: #e67300;
+}
+
+.payment-status.completed {
+    background-color: #28a745;
+    color: white;
+}
+
+.payment-status.failed {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Notifications for Payments */
+.payment-notifications {
+    margin-top: 2em;
+    padding: 1em;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.payment-notifications h3 {
+    color: #005792;
+}
+
+.payment-notifications ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.payment-notifications ul li {
+    margin-bottom: 0.5em;
+}
+
+/* Payment Action Buttons */
+.payment-action-buttons {
+    display: flex;
+    gap: 1em;
+    margin-top: 2em;
+}
+
+.payment-action-buttons button {
+    padding: 1em 2em;
+    font-size: 1em;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.payment-action-buttons button:hover {
+    background-color: #218838;
+}
+
+.payment-action-buttons .cancel {
+    background-color: #dc3545;
+}
+
+.payment-action-buttons .cancel:hover {
+    background-color: #c82333;
+}
+
+/* Payment Table Row Hover Effect */
+.payment-table tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+ /* Additional specific styles for Dashboard */
+ main {
+    padding: 2em;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #005792;
+    margin-bottom: 1em;
+}
+
+.quick-links a {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    padding: 1em;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 1em;
+    text-decoration: none;
+    width: 100%;
+    max-width: 300px;
+}
+
+.quick-links a:hover {
+    background-color: #218838;
+}
+
+.notifications {
+    margin-top: 2em;
+}
+
+.notifications h3 {
+    color: #005792;
+    margin-bottom: 1em;
+}
+
+.notifications p {
+    font-size: 1.1em;
+    color: #333;
+}
+
+.notifications p strong {
+    color: #28a745;
+}
+
+/* Responsive Design for mobile */
+@media (max-width: 768px) {
+    .quick-links a {
+        width: 100%;
+        padding: 1em;
+    }
+
+    .notifications p {
+        font-size: 1em;
+    }
+}
+/* Payment Details Specific Styles */
+
+/* Payment Info Table */
+.payment-info h3 {
+    color: #005792;
+    margin-bottom: 1em;
+}
+
+.payment-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+
+.payment-table th, .payment-table td {
+    padding: 1em;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.payment-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.payment-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.payment-table td {
+    font-size: 1.1em;
+}
+
+.payment-table .completed {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.payment-table .pending {
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+/* Payment History Table */
+.payment-history h3 {
+    color: #005792;
+    margin-top: 2em;
+}
+
+.payment-history .payment-table {
+    margin-top: 1em;
+}
+
+.payment-actions .payment-action-buttons {
+    display: flex;
+    gap: 1em;
+    margin-top: 2em;
+}
+
+.payment-actions .payment-action-buttons button {
+    padding: 1em 2em;
+    font-size: 1em;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.payment-actions .payment-action-buttons button:hover {
+    background-color: #218838;
+}
+
+.payment-actions .payment-action-buttons .cancel {
+    background-color: #dc3545;
+}
+
+.payment-actions .payment-action-buttons .cancel:hover {
+    background-color: #c82333;
+}
+/* Payment Receipt Specific Styles */
+
+/* Payment Receipt Information Table */
+.payment-receipt-info h3 {
+    color: #005792;
+    margin-bottom: 1em;
+}
+
+.payment-receipt-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+
+.payment-receipt-table th, .payment-receipt-table td {
+    padding: 1em;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.payment-receipt-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.payment-receipt-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.payment-receipt-table td {
+    font-size: 1.1em;
+}
+
+.payment-receipt-table .completed {
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* Payment Receipt Details */
+.receipt-details {
+    margin-top: 2em;
+    font-size: 1.1em;
+}
+
+.receipt-details p {
+    margin-bottom: 1em;
+}
+
+/* Print Section */
+.print-section {
+    margin-top: 2em;
+}
+
+.print-section button {
+    padding: 1em 2em;
+    font-size: 1em;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.print-section button:hover {
+    background-color: #218838;
+}
+
+.print-section button:focus {
+    outline: none;
+}
+/* Vendor Details Page Specific Styles */
+
+/* Vendor Information Table */
+.vendor-info h3 {
+    color: #005792;
+    margin-bottom: 1em;
+}
+
+.vendor-details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+
+.vendor-details-table th, .vendor-details-table td {
+    padding: 1em;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.vendor-details-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.vendor-details-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.vendor-details-table td {
+    font-size: 1.1em;
+}
+
+.vendor-details-table .active {
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* Procurement History Table */
+.procurement-history h3 {
+    color: #005792;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+.procurement-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.procurement-table th, .procurement-table td {
+    padding: 1em;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.procurement-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.procurement-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.procurement-table .completed {
+    color: #28a745;
+}
+
+.procurement-table .pending {
+    color: #ff9900;
+}
+
+/* Action Buttons */
+.action-buttons {
+    margin-top: 2em;
+}
+
+.action-buttons .button {
+    background-color: #005792;
+    color: white;
+    padding: 1em 2em;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.action-buttons .button:hover {
+    background-color: #003d5c;
+}
+
+.action-buttons .button:focus {
+    outline: none;
+}
+/* Edit Vendor Page Specific Styles */
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+form label {
+    font-size: 1.1em;
+    color: #333;
+}
+
+form input, form textarea, form select {
+    padding: 0.8em;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+}
+
+form textarea {
+    resize: vertical;
+}
+
+form button {
+    background-color: #005792;
+    color: white;
+    padding: 1em;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+form button:hover {
+    background-color: #003d5c;
+}
+
+/* Action Buttons */
+.action-buttons {
+    margin-top: 2em;
+    text-align: center;
+}
+
+.action-buttons .button {
+    background-color: #f0ad4e;
+    color: white;
+    padding: 1em 2em;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.action-buttons .button:hover {
+    background-color: #ec971f;
+}
+/* Vendor Info Page Styles */
+.vendor-details {
+    max-width: 800px;
+    margin: 2em auto;
+    padding: 1.5em;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.vendor-details h3 {
+    font-size: 1.5em;
+    color: #005792;
+    margin-bottom: 1em;
+}
+
+.vendor-details table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.vendor-details th, .vendor-details td {
+    padding: 1em;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.vendor-details th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.vendor-details tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Action Buttons */
+.action-buttons {
+    margin-top: 2em;
+    text-align: center;
+}
+
+.action-buttons .button {
+    background-color: #28a745;
+    color: white;
+    padding: 1em 2em;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1em;
+    margin-right: 1em;
+}
+
+.action-buttons .button:hover {
+    background-color: #218838;
+}
+
+.action-buttons .button:nth-child(2) {
+    background-color: #dc3545;
+}
+
+.action-buttons .button:nth-child(2):hover {
+    background-color: #c82333;
+}
+/* Edit Profile Page Styles */
+
+.profile-form {
+    max-width: 600px;
+    margin: 2em auto;
+    padding: 1em;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-form .form-group {
+    margin-bottom: 1.5em;
+}
+
+.profile-form label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+.profile-form input {
+    width: 100%;
+    padding: 0.8em;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.profile-form input[type="password"] {
+    margin-bottom: 0.5em;
+}
+
+.profile-form button {
+    background-color: #005792;
+    color: white;
+    padding: 1em;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1em;
+    width: 100%;
+    border-radius: 4px;
+}
+
+.profile-form button:hover {
+    background-color: #00406b;
+}
+
+.profile-form input:focus, .profile-form button:focus {
+    outline: none;
+    border-color: #005792;
+}
+
+footer {
+    background: #333;
+    color: white;
+    padding: 1em;
+    text-align: center;
+    margin-top: 2em;
+}
+/* About Page Styles */
+
+.about-section {
+    max-width: 800px;
+    margin: 2em auto;
+    padding: 2em;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-section h1 {
+    color: #005792;
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+.about-section h2 {
+    color: #333;
+    font-size: 1.5em;
+    margin-top: 1.5em;
+}
+
+.about-section p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #555;
+}
+
+.about-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.about-section ul li {
+    font-size: 1.1em;
+    color: #555;
+    margin: 0.5em 0;
+}
+
+footer {
+    background: #333;
+    color: white;
+    padding: 1em;
+    text-align: center;
+    margin-top: 2em;
+}
+/* Logout Page Styles */
+
+.logout-section {
+    max-width: 600px;
+    margin: 3em auto;
+    padding: 2em;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.logout-section h1 {
+    color: #005792;
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+.logout-section p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 1em;
+}
+
+.logout-section .button {
+    padding: 0.8em 1.5em;
+    font-size: 1.1em;
+    color: white;
+    background-color: #005792;
+    text-decoration: none;
+    border-radius: 4px;
+    margin: 0.5em;
+}
+
+.logout-section .button:hover {
+    background-color: #003b5c;
+}
+

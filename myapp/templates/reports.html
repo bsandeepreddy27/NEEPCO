@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - NEEPCO</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <div class="logo">NEEPCO</div>
+        <nav>
+            <a href="{% url 'index' %}">Home</a>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'procurement' %}">Procurement</a>
+            <a href="{% url 'vendor' %}">Vendor Management</a>
+            <a href="{% url 'payments' %}">Payments</a>
+            <a href="{% url 'reports' %}" class="active">Reports</a>
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Reports & Analytics</h1>
+        
+        <!-- Procurement Analytics Section -->
+        <section class="report-section">
+            <h2>Procurement Analytics</h2>
+            <div class="report-chart">
+                <img src="{% static 'images/procurement-spending-graph.png' %}" alt="Procurement Spending Graph" />
+                <p>Graph showing procurement spending by department, vendor type, and product category.</p>
+            </div>
+        </section>
+
+        <!-- Vendor Performance Section -->
+        <section class="report-section">
+            <h2>Vendor Performance</h2>
+            <div class="report-chart">
+                <img src="{% static 'images/vendor-performance-chart.png' %}" alt="Vendor Performance Chart" />
+                <p>Chart showing vendor performance based on delivery times, quality scores, and overall satisfaction.</p>
+            </div>
+        </section>
+
+        <!-- Payment Insights Section -->
+        <section class="report-section">
+            <h2>Payment Insights</h2>
+            <div class="report-chart">
+                <img src="{% static 'images/payment-insights-chart.png' %}" alt="Payment Insights Chart" />
+                <p>Insights on payment frequency, processing times, and any delayed payments.</p>
+            </div>
+        </section>
+
+        <!-- Custom Reports Section -->
+        <section class="report-section">
+            <h2>Generate Custom Reports</h2>
+            <form id="reportForm" method="POST" action="{% url 'generate_report' %}">
+                {% csrf_token %}
+                
+                <label for="reportType">Report Type:</label>
+                <select id="reportType" name="reportType">
+                    <option value="procurement">Procurement</option>
+                    <option value="vendor">Vendor Performance</option>
+                    <option value="payments">Payments</option>
+                </select>
+
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" name="startDate" required>
+
+                <label for="endDate">End Date:</label>
+                <input type="date" id="endDate" name="endDate" required>
+
+                <button type="submit">Generate Report</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 NEEPCO Procurement Portal</p>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

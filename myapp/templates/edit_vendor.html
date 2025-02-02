@@ -1,0 +1,244 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Management - NEEPCO</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-left: 20px;
+            display: inline-block;
+        }
+
+        nav {
+            float: right;
+            margin-right: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: #007BFF;
+        }
+
+        main {
+            margin: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .vendor-search, .vendor-list, .mse-support {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .vendor-search form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .vendor-search label {
+            margin-bottom: 5px;
+        }
+
+        .vendor-search input, .vendor-search select {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .vendor-search button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .vendor-search button:hover {
+            background-color: #218838;
+        }
+
+        .vendor-list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .vendor-list th, .vendor-list td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .vendor-list th {
+            background-color: #f8f8f8;
+        }
+
+        .vendor-list tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .mse-support ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .mse-support ul li {
+            margin: 5px 0;
+        }
+
+        .mse-support ul li a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        .mse-support ul li a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .action-buttons a {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .action-buttons a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">NEEPCO</div>
+        <nav>
+            <a href="{% url 'index' %}">Home</a>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'procurement' %}">Procurement</a>
+            <a href="{% url 'vendor' %}" class="active">Vendor Management</a>
+            <a href="{% url 'payments' %}">Payments</a>
+            <a href="{% url 'reports' %}">Reports</a>
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Vendor Management</h1>
+
+        <!-- Search and Filter Section -->
+        <section class="vendor-search">
+            <h2>Search Vendors</h2>
+            <form id="vendorSearchForm" method="get">
+                {% csrf_token %}
+                <label for="vendorName">Vendor Name:</label>
+                <input type="text" id="vendorName" name="vendorName" placeholder="Enter vendor name">
+                
+                <label for="vendorType">Vendor Type:</label>
+                <select id="vendorType" name="vendorType">
+                    <option value="all">All</option>
+                    <option value="mse">MSE (Micro and Small Enterprises)</option>
+                    <option value="large">Large Enterprise</option>
+                </select>
+                
+                <button type="submit">Search</button>
+            </form>
+        </section>
+
+        <!-- Vendor List Section -->
+        <section class="vendor-list">
+            <h2>Vendor Directory</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Vendor ID</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Contact</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for vendor in vendors %}
+                    <tr>
+                        <td>{{ vendor.vendor_id }}</td>
+                        <td>{{ vendor.name }}</td>
+                        <td>{{ vendor.vendor_type }}</td>
+                        <td>{{ vendor.contact }}</td>
+                        <td>{{ vendor.status }}</td>
+                        <td><a href="{% url 'vendor_details' vendor.vendor_id %}">View Details</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <!-- MSE Vendor Support Section -->
+        <section class="mse-support">
+            <h2>MSE Vendor Engagement</h2>
+            <p>NEEPCO encourages participation from Micro and Small Enterprises (MSEs). Below are resources and support links for MSE vendors:</p>
+            <ul>
+                <li><a href="#">MSE Onboarding Guide</a></li>
+                <li><a href="#">Support Resources</a></li>
+                <li><a href="#">Contact for Assistance</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 NEEPCO Procurement Portal</p>
+    </footer>
+</body>
+</html>

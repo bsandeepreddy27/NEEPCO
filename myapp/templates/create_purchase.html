@@ -1,0 +1,74 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Purchase Order - NEEPCO</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'procurement' %}">Procurement Management</a>
+            <a href="{% url 'vendor' %}">Vendor Management</a>
+            <a href="{% url 'payments' %}">Payments</a>
+            <a href="{% url 'reports' %}">Reports</a>
+            <a href="{% url 'compliance' %}">Compliance</a>
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Create New Purchase Order</h2>
+
+        <form action="{% url 'submit_purchase_order' %}" method="POST">
+            {% csrf_token %}
+            
+            <label for="order_number">Order Number</label>
+            <input type="text" id="order_number" name="order_number" required>
+
+            <label for="vendor">Vendor</label>
+            <select id="vendor" name="vendor" required>
+                {% for vendor in vendor %}
+                    <option value="{{ vendor.id }}">{{ vendor.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="item">Item</label>
+            <input type="text" id="item" name="item" required>
+
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" name="quantity" required>
+
+            <label for="unit_price">Unit Price</label>
+            <input type="number" id="unit_price" name="unit_price" step="0.01" required>
+
+            <label for="total_price">Total Price</label>
+            <input type="number" id="total_price" name="total_price" step="0.01" required readonly>
+
+            <button type="submit">Submit Purchase Order</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>© 2024 NEEPCO | <a href="#">Terms & Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact Us</a> | <a href="#">FAQ</a></p>
+    </footer>
+
+    <script>
+        // JavaScript to calculate total price dynamically
+        document.getElementById('quantity').addEventListener('input', updateTotalPrice);
+        document.getElementById('unit_price').addEventListener('input', updateTotalPrice);
+
+        function updateTotalPrice() {
+            var quantity = parseFloat(document.getElementById('quantity').value) || 0;
+            var unitPrice = parseFloat(document.getElementById('unit_price').value) || 0;
+            var totalPrice = (quantity * unitPrice).toFixed(2);
+            document.getElementById('total_price').value = totalPrice;
+        }
+    </script>
+</body>
+</html>

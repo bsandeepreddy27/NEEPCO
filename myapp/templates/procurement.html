@@ -1,0 +1,78 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procurement Management - NEEPCO</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+    <header>
+        <div class="logo">NEEPCO</div>
+        <nav>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'procurement' %}">Procurement Management</a>
+            <a href="{% url 'vendor' %}">Vendor Management</a>
+            <a href="{% url 'payments' %}">Payments</a>
+            <a href="{% url 'reports' %}">Reports</a>
+            <a href="{% url 'compliance' %}">Compliance</a>
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Procurement Management</h1>
+
+        <!-- Procurement Requests Section -->
+        <section id="current-requests">
+            <h2>Current Procurement Requests</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Vendor</th>
+                        <th>Item Details</th>
+                        <th>Quantity</th>
+                        <th>Urgency Level</th>
+                        <th>Status</th>
+                        <th>Approval Workflow</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for request in procurement_requests %}
+                    <tr>
+                        <td>{{ request.request_id }}</td>
+                        <td>{{ request.vendor.name }}</td>
+                        <td>{{ request.item_details }}</td>
+                        <td>{{ request.quantity }}</td>
+                        <td>{{ request.get_urgency_display }}</td>
+                        <td>{{ request.status }}</td>
+                        <td><button class="status-button">View Workflow</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Create New Request Section -->
+        <section id="create-request">
+            <h2>Create New Procurement Request</h2>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="submit-button">Submit Request</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 NEEPCO | <a href="#">Terms & Conditions</a> | <a href="#">Privacy Policy</a></p>
+    </footer>
+</body>
+
+</html>

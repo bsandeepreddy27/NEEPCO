@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - NEEPCO</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'index' %}">Home</a>
+            <a href="{% url 'about' %}">About Us</a>
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'signup' %}">Sign Up</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="about-section">
+            <h1>About NEEPCO Procurement Portal</h1>
+            <p>The NEEPCO Procurement Portal is designed to streamline and simplify the procurement process for NEEPCO (North Eastern Electric Power Corporation Limited) by providing a user-friendly platform for managing procurement activities, vendor relationships, and payments. Our portal aims to ensure transparency, compliance, and efficiency in all procurement-related tasks.</p>
+            
+            <h2>Our Mission</h2>
+            <p>To create a seamless and efficient procurement system that enhances operational effectiveness, reduces delays, and fosters stronger partnerships with vendors, while ensuring compliance with governmental and organizational regulations.</p>
+            
+            <h2>Features of the Portal</h2>
+            <ul>
+                <li>Procurement Management: Simplified purchase order creation and vendor selection process.</li>
+                <li>Vendor Management: Centralized database to track vendor performance, contact details, and compliance statuses.</li>
+                <li>Payment Tracking: Real-time updates on payment statuses and due amounts for vendors.</li>
+                <li>Reports and Compliance: Generating procurement-related reports and ensuring adherence to regulatory requirements.</li>
+            </ul>
+            
+            <h2>Why Choose Us?</h2>
+            <p>Our portal is designed to provide greater transparency, increase procurement efficiency, and improve decision-making. We ensure that all procurement activities are documented, monitored, and optimized for the best possible outcomes.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 NEEPCO | <a href="#">Terms & Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact Us</a> | <a href="#">FAQ</a></p>
+    </footer>
+    
+</body>
+</html>

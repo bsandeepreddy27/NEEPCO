@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Details - NEEPCO</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'procurement' %}">Procurement Management</a>
+            <a href="{% url 'vendor' %}">Vendor Management</a>
+            <a href="{% url 'payments' %}">Payments</a>
+            <a href="{% url 'reports' %}">Reports</a>
+            <a href="{% url 'compliance' %}">Compliance</a>
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Vendor Details</h2>
+
+        <!-- Vendor Information Section -->
+        <section class="vendor-info">
+            <h3>Vendor Overview</h3>
+            <table class="vendor-details-table">
+                <tr>
+                    <th>Vendor Name</th>
+                    <td>{{ vendor.name }}</td>
+                </tr>
+                <tr>
+                    <th>Business Type</th>
+                    <td>{{ vendor.get_vendor_type_display }}</td>
+                </tr>
+                <tr>
+                    <th>Vendor ID</th>
+                    <td>{{ vendor.vendor_id }}</td>
+                </tr>
+                <tr>
+                    <th>Contact Person</th>
+                    <td>{{ vendor.contact_person }}</td>
+                </tr>
+                <tr>
+                    <th>Phone Number</th>
+                    <td>{{ vendor.phone_number }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ vendor.contact }}</td>
+                </tr>
+                <tr>
+                    <th>Address</th>
+                    <td>{{ vendor.address }}</td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td class="active">{{ vendor.get_status_display }}</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Procurement History Section -->
+        <section class="procurement-history">
+            <h3>Past Procurement Activities</h3>
+            <table class="procurement-table">
+                <tr>
+                    <th>Purchase Order</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+                {% for purchase in vendor.purchase_orders.all %}
+                <tr>
+                    <td>{{ purchase.purchase_order_id }}</td>
+                    <td>${{ purchase.amount }}</td>
+                    <td>{{ purchase.date }}</td>
+                    <td class="{{ purchase.get_status_class }}">{{ purchase.get_status_display }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No past procurement activities found.</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+
+        <!-- Action Section -->
+        <section class="action-buttons">
+            <a href="{% url 'edit_vendor' vendor.vendor_id %}" class="button">Edit Vendor</a>
+            <a href="{% url 'create_purchase' %}" class="button">Create Purchase Order</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 NEEPCO | <a href="#">Terms & Conditions</a> | <a href="#">Privacy Policy</a></p>
+    </footer>
+
+</body>
+</html>

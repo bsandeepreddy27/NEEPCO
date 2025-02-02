@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout - NEEPCO Procurement Portal</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'index' %}">Home</a>
+            <a href="{% url 'about' %}">About Us</a>
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'signup' %}">Sign Up</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="logout-section">
+            <h1>You have successfully logged out</h1>
+            <p>Thank you for using the NEEPCO Portal. You have been logged out of your account.</p>
+            <p>
+                <a href="{% url 'index' %}" class="button">Go to Homepage</a> | 
+                <a href="{% url 'login' %}" class="button">Login Again</a>
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 NEEPCO | <a href="#">Terms & Conditions</a> | <a href="#">Privacy Policy</a></p>
+    </footer>
+    
+</body>
+
+</html>

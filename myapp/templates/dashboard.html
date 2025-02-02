@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - NEEPCO </title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <div class="logo">NEEPCO </div>
+        <nav>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'procurement' %}">Procurement Management</a>
+            <a href="{% url 'vendor' %}">Vendor Management</a>
+            <a href="{% url 'payments' %}">Payments</a>
+            <a href="{% url 'reports' %}">Reports</a>
+            <a href="{% url 'compliance' %}">Compliance</a>
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Dashboard Overview</h2>
+
+        <!-- Quick Links Section -->
+        <section class="quick-links">
+            <a href="{% url 'create_purchase_order' %}">Create New Purchase Order</a>
+            <a href="{% url 'vendor_info' %}">Access Vendor Information</a>
+            <a href="{% url 'track_payments' %}">Track Payments</a>
+        </section>
+
+        <!-- Notifications Section -->
+        <section class="notifications">
+            <h3>Notifications</h3>
+            <p><strong>Pending Payments:</strong> 3 items</p>
+            <p><strong>New Tenders:</strong> 2 items</p>
+            <p><strong>Upcoming Deadlines:</strong> 5 items</p>
+        </section>
+    </main>
+</body>
+</html>

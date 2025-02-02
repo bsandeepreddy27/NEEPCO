@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Receipt - NEEPCO </title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="procurement.html">Procurement Management</a>
+            <a href="vendor.html">Vendor Management</a>
+            <a href="payments.html">Payments</a>
+            <a href="reports.html">Reports</a>
+            <a href="compliance.html">Compliance</a>
+            <a href="profile.html">Profile</a>
+            <a href="logout.html">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Payment Receipt</h2>
+
+        <!-- Payment Receipt Information Section -->
+        <section class="payment-receipt-info">
+            <h3>Receipt Overview</h3>
+            <table class="payment-receipt-table">
+                <tr>
+                    <th>Receipt Number</th>
+                    <td>#R98765</td>
+                </tr>
+                <tr>
+                    <th>Vendor Name</th>
+                    <td>Vendor XYZ</td>
+                </tr>
+                <tr>
+                    <th>Payment Amount</th>
+                    <td>$5000</td>
+                </tr>
+                <tr>
+                    <th>Payment Method</th>
+                    <td>Bank Transfer</td>
+                </tr>
+                <tr>
+                    <th>Transaction ID</th>
+                    <td>#T98765</td>
+                </tr>
+                <tr>
+                    <th>Payment Status</th>
+                    <td class="completed">Completed</td>
+                </tr>
+                <tr>
+                    <th>Payment Date</th>
+                    <td>10th November 2024</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Payment Receipt Details Section -->
+        <section class="receipt-details">
+            <h3>Payment Details</h3>
+            <p>This receipt confirms the successful payment made for the purchase order #PO12345. The total amount of $5000 was transferred via bank transfer to the vendor account as per the agreed terms.</p>
+            <p><strong>Note:</strong> This receipt serves as proof of payment for the transaction conducted. Please keep this receipt for your records.</p>
+        </section>
+
+        <!-- Print Button -->
+        <section class="print-section">
+            <button onclick="window.print()">Print Receipt</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 NEEPCO | <a href="#">Terms & Conditions</a> | <a href="#">Privacy Policy</a></p>
+    </footer>
+</body>
+</html>
