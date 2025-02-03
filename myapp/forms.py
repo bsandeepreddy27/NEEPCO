@@ -7,7 +7,7 @@ from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from .models import ProcurementRequest, Vendor, Profile
 
-
+from .models import PurchaseOrder, Vendor
 from django import forms
 
 
@@ -130,15 +130,45 @@ class ProfileForm(forms.ModelForm):
 
 
 class VendorForm(forms.ModelForm):
+    """
+    Form to create or update Vendor details.
+    """
+    
     class Meta:
         model = Vendor
         fields = [
-            'name',
-            'vendor_type',
-            'phone_number',
-            'contact_person',
-            'business_type',
-            'address',
-            'email',
-            'status'
+            'name', 'vendor_type', 'phone_number', 'contact_person', 
+            'business_type', 'address', 'email', 'status'
         ]
+        
+        # Widget customizations
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'vendor_type': forms.Select(attrs={'class': 'form-control'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control'}),
+            'contact_person': forms.TextInput(attrs={'class': 'form-control'}),
+            'business_type': forms.TextInput(attrs={'class': 'form-control'}),
+            'address': forms.Textarea(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'})
+        }
+        
+    # Custom validation for phone number
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data.get('phone_number')
+        if phone_number:
+            if not phone_number.startswith('+'):
+                raise forms.ValidationError("Phone number must start with a '+' sign.")
+        return phone_number
+        
+class PurchaseOrderForm(forms.ModelForm):
+    class Meta:
+        model = PurchaseOrder
+        fields = ['order_number', 'vendor', 'item', 'quantity', 'unit_price']
+        widgets = {
+            'order_number': forms.TextInput(attrs={'class': 'form-control'}),
+            'vendor': forms.Select(attrs={'class': 'form-control'}),
+            'item': forms.TextInput(attrs={'class': 'form-control'}),
+            'quantity': forms.NumberInput(attrs={'class': 'form-control'}),
+            'unit_price': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
+        }

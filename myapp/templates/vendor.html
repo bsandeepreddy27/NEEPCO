@@ -2,14 +2,12 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vendor Management - NEEPCO</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-
 <body>
     <header>
         <div class="logo">NEEPCO</div>
@@ -62,14 +60,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for vendor in vendors %}
+                    {% for vendor in vendor %}
                     <tr>
                         <td>{{ vendor.vendor_id }}</td>
                         <td>{{ vendor.name }}</td>
-                        <td>{{ vendor.vendor_type }}</td>
-                        <td>{{ vendor.contact }}</td>
+                       
+                        <td>{{ vendor.business_type }}</td>
+                        <!-- Adjust field name if necessary -->
+                        <td>{{ vendor.contact_person }}</td>
                         <td>{{ vendor.status }}</td>
                         <td><a href="{% url 'vendor_details' vendor.vendor_id %}">View Details</a></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6">No vendors found.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -94,5 +98,4 @@
 
     <script src="{% static 'js/main.js' %}"></script>
 </body>
-
 </html>

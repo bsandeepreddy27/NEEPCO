@@ -6,39 +6,60 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
+from django.db import models
+import uuid
+from django.core.validators import RegexValidator
+
 class Vendor(models.Model):
-    # You usually don't need to declare vendor_id if you want Django to create the default auto-incrementing primary key.
-    # If you do need a custom primary key, you can define it as follows:
-    vendor_id = models.AutoField(primary_key=True)
-    
-    name = models.CharField(max_length=255)
-    
-    # Add a default value for vendor_type so that new rows have a value.
-    VENDOR_TYPE_CHOICES = (
+    """
+    Vendor model represents a supplier or vendor associated with NEEPCO.
+    """
+
+    # Custom Vendor ID (UUID for uniqueness)
+    vendor_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    name = models.CharField(max_length=255, verbose_name="Vendor Name")
+
+    # Vendor Type with Choices
+    VENDOR_TYPE_CHOICES = [
         ('mse', 'MSE (Micro and Small Enterprises)'),
         ('large', 'Large Enterprise'),
-    )
+    ]
     vendor_type = models.CharField(
         max_length=50,
         choices=VENDOR_TYPE_CHOICES,
-        default='mse'  # Set a default value, for example 'mse'
+        default='mse',
+        verbose_name="Vendor Type"
     )
-    
-    # If you have additional fields that were added later and are non-nullable, make sure to provide a default as well.
-    # For example, if you have these extra fields:
-    phone_number = models.CharField(max_length=20, blank=True, null=True)
+
+    # Phone Number with Validation
+    phone_regex = RegexValidator(
+        regex=r'^\+?1?\d{9,15}$',
+        message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."
+    )
+    phone_number = models.CharField(validators=[phone_regex], max_length=20, blank=True, null=True)
+
     contact_person = models.CharField(max_length=255, blank=True, null=True)
     business_type = models.CharField(max_length=100, blank=True, null=True)
     address = models.TextField(blank=True, null=True)
-    email = models.EmailField(blank=True, null=True)
     
-    # A simple status field
-    status = models.CharField(max_length=50, default='Active')
+    # Unique email with validation
+    email = models.EmailField(unique=True, blank=True, null=True)
+
+    # Status Field with Choices
+    STATUS_CHOICES = [
+        ('Active', 'Active'),
+        ('Inactive', 'Inactive'),
+    ]
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='Active', verbose_name="Status")
+
+    created_at = models.DateTimeField(auto_now_add=True)  # Timestamp for creation
+    updated_at = models.DateTimeField(auto_now=True)  # Timestamp for updates
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.vendor_type.upper()})"
 
-
+        
 class PurchaseOrder(models.Model):
     order_number = models.CharField(max_length=50, unique=True)
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)

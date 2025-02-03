@@ -2,8 +2,9 @@ from django.urls import path
 from . import views
 from .views import vendor_info
 from django.contrib.auth import views as auth_views
-
+from .views import vendor_view
 from .views import otp_form, resend_otp
+from .views import vendor_list, vendor_details
 
 urlpatterns = [
     path('about/', views.about, name='about'),
@@ -46,7 +47,9 @@ urlpatterns = [
     path('vendor_info/', views.vendor_info, name='vendor_info'),
     path('vendor_info/<int:vendor_id>/', views.vendor_info, name='vendor_info'),
     path('vendor_details/<int:vendor_id>/', views.vendor_details, name='vendor_details'),
-    path('vendor/', views.vendor, name='vendor'),
+    
+   # path('vendor/', vendor_view, name='vendor'),
+    path('vendor/', vendor_list, name='vendor'),
 
     path('password-reset/', views.password_reset_request, name='password_reset'),  # URL pattern for password reset
     path('password-reset/done/', views.password_reset_done, name='password_reset_done'),

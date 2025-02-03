@@ -24,20 +24,43 @@ from django.contrib import messages
 
 from .forms import SignUpForm 
 
-
+from .models import Vendor
 from django.conf import settings
 import random
 import string
 
 
 from .forms import LoginForm, OTPForm 
-
+def vendor_list(request):
+    vendors = Vendor.objects.all()  # Fetch all vendors
+    return render(request, 'vendor.html', {'vendors': vendors})
 # Function-based views for each page
 def about(request):
     return render(request, 'about.html')
 
 def compliance(request):
     return render(request, 'compliance.html')
+
+def vendor_view(request):
+    # Get filter parameters from GET request
+    vendor_name = request.GET.get('vendorName', '')
+    vendor_type = request.GET.get('vendorType', 'all')
+
+    # Retrieve all vendors
+    vendors = Vendor.objects.all()
+
+    # Filter by vendor name if provided
+    if vendor_name:
+        vendors = vendors.filter(name__icontains=vendor_name)
+    
+    # Filter by vendor type if provided and not "all"
+    if vendor_type and vendor_type.lower() != 'all':
+        vendors = vendors.filter(vendor_type=vendor_type)
+    
+    context = {
+        'vendors': vendors
+    }
+    return render(request, 'vendor.html', context)
 
 def create_purchase_order(request):
     if request.method == 'POST':

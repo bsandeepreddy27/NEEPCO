@@ -1008,3 +1008,40 @@ footer {
     background-color: #003b5c;
 }
 
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    margin-right: 15px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.button {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.delete-button {
+    background-color: #dc3545;
+}
+
+.no-data {
+    color: red;
+    font-style: italic;
+}
